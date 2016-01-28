@@ -27,10 +27,10 @@ void verEmbarcaciones(struct Embarcacion * embarcaciones);
 int numEmbarcaciones = 0;
 
 int main(){
+  int global;
   int op = -1;
   char * menu = "1.Incorporar barco\n2.Incorporar tripulantes\n3.Ver tripulacion\n4.Ver embarcaciones\n5.Salir\nSelecciona tu opcion: ";
-  menu_t * opciones = (menu_t *)malloc(4*sizeof(menu_t));
-
+  menu_t * opciones = (menu_t *)malloc(4*sizeof(menu_t));  
   struct Embarcacion * embarcaciones;
   int * ptr = &numEmbarcaciones;
 
@@ -44,6 +44,10 @@ int main(){
   while(op != 5){
     printf("%s",menu);
     scanf("%d",&op);
+    if(op==1 && numEmbarcaciones > 0){
+      printf("%d\n",numEmbarcaciones);
+      embarcaciones = (struct Embarcacion *) realloc (embarcaciones,(numEmbarcaciones+1)*sizeof(struct Embarcacion));
+    }
     if(op > 0 && op <5){
       (*(opciones[op-1]))(embarcaciones);
     }
@@ -55,8 +59,8 @@ int main(){
       free(((embarcaciones+i)->tripulantes+j)->nombre);
       free(((embarcaciones+i)->tripulantes+j)->apellido);
       free(((embarcaciones+i)->tripulantes+j)->rol);
-      free(((embarcaciones+i)->tripulantes+j));
     }
+    free(((embarcaciones+i)->tripulantes+j));
     free((embarcaciones+i)->nombre);
     free((embarcaciones+i));
   }
@@ -66,8 +70,8 @@ int main(){
 
 void agregarEmbarcacion(struct Embarcacion * embarcaciones){
 
-  if(numEmbarcaciones>0)
-    embarcaciones = (struct Embarcacion *) realloc (embarcaciones,numEmbarcaciones*sizeof(struct Embarcacion));
+  //if(numEmbarcaciones>0)
+    //embarcaciones = (struct Embarcacion *) realloc (embarcaciones,numEmbarcaciones*sizeof(struct Embarcacion));
 
   printf("Dame el nombre de la embarcaion: ");
 
