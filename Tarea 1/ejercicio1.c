@@ -30,7 +30,7 @@ int main(){
   int global;
   int op = -1;
   char * menu = "1.Incorporar barco\n2.Incorporar tripulantes\n3.Ver tripulacion\n4.Ver embarcaciones\n5.Salir\nSelecciona tu opcion: ";
-  menu_t * opciones = (menu_t *)malloc(4*sizeof(menu_t));  
+  menu_t * opciones = (menu_t *)malloc(4*sizeof(menu_t));
   struct Embarcacion * embarcaciones;
   int * ptr = &numEmbarcaciones;
 
@@ -60,10 +60,10 @@ int main(){
       free(((embarcaciones+i)->tripulantes+j)->apellido);
       free(((embarcaciones+i)->tripulantes+j)->rol);
     }
-    free(((embarcaciones+i)->tripulantes+j));
+    free(((embarcaciones+i)->tripulantes));
     free((embarcaciones+i)->nombre);
-    free((embarcaciones+i));
   }
+  free(embarcaciones);
   free(opciones);
   return 0;
 }
