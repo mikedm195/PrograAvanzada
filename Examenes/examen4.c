@@ -19,6 +19,7 @@ int main(int argc, const char * argv[]){
 			printf("Error al crear el proceso hijo");
 			//exit(-1);
 		}else if (pid == 0){
+			sleep(3);
 			leer(tuberia);
 		}else {	
 			escribir(tuberia);
@@ -28,20 +29,23 @@ int main(int argc, const char * argv[]){
 }
 
 void leer(int * fd){
-	printf("leyendo\n");
+	//printf("leyendo\n");
 	int c;
 	close(fd[1]);
 	read(fd[0],&c,sizeof(int));
-	printf("Soy el proceso con PID %d  y recibí el testigo %d, el cual tendré por 3 segundos\n",getpid(),c);
+	printf("—->Soy el proceso con PID %d  y recibí el testigo %d, el cual tendré por 3 segundos\n",getpid(),c);
 	
 }
 
 void escribir(int * fd){
-	printf("escribiendo\n");
+	//printf("escribiendo\n");
 	int n = 0;
 	sleep(3);
 	close(fd[0]);
+	printf("<—- Soy el proceso con PID %d y acabo de enviar el testigo %d\n",getpid(),n);
 	write(fd[1],&n, sizeof(int));
+
+
 }
 
 
