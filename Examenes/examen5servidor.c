@@ -1,0 +1,129 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <string.h>
+#define TCP_PORT 8000
+
+int lectura();
+int maximo(int * datos,int n);
+int minimo(int * datos,int n);
+double promedio(int * datos,int n);
+int resultados(int * datos,int n);
+/* reverse: reverse string s in place */
+
+int servidor, cliente;
+int leidos, escritos;
+char buffer[1000];
+
+void reverse(char s[])
+{
+	int i, j;
+	char c;
+	for (i = 0, j = strlen(s)-1; i<j; i++, j--) {
+		c = s[i];
+		s[i] = s[j];
+		s[j] = c;
+	}
+}
+void itoa(int n, char s[])
+{
+	int i, sign;
+	if ((sign = n) < 0) /* record sign */
+		n = -n; /* make n positive */
+	i = 0;
+	do { /* generate digits in reverse order */
+		s[i++] = n % 10 + '0'; /* get next digit */
+	} while ((n /= 10) > 0); /* delete it */
+	if (sign < 0)
+		s[i++] = '-';
+	s[i] = '\0';
+	reverse(s);
+}
+int main(int argc, const char * argv[]) {
+
+	struct sockaddr_in direccion;
+
+	if (argc != 2) {
+		printf("Error. Use: %s A.B.C.D \n", argv[0]);
+		exit(-1);
+	}
+
+	//Crear el socket
+	servidor = socket(PF_INET, SOCK_STREAM, 0);
+
+	// Enlace con el socket
+	direccion.sin_port = htons(TCP_PORT);
+	direccion.sin_family = AF_INET;
+	inet_aton(argv[1], &direccion.sin_addr);
+	bind(servidor, (struct sockaddr *) &direccion, sizeof(direccion));
+
+	// Escuchar a los clientes
+	listen(servidor, 10);
+
+	// Comunicación
+	socklen_t tamano = sizeof(direccion);
+	cliente = accept(servidor, (struct sockaddr *) &direccion, &tamano);
+
+	if (cliente >= 0) {
+		printf("Aceptando conexiones en %s:%d \n",
+		inet_ntoa(direccion.sin_addr),
+		ntohs(direccion.sin_port));
+		
+		lectura();
+	}
+
+	// Cerrar el socket
+	close(servidor);
+	close(cliente);
+	return 0;
+}
+
+int lectura(){
+	int * datos = (int *) malloc(sizeof(int));
+	int fact;
+	int i = 1;
+	// Leer de socket y escribir en pantalla
+	while(leidos = read(fileno(stdin), &buffer, sizeof(buffer))){
+		datos = (int *)realloc(datos,i);
+		*(datos+i)=atoi(buffer);
+		printf("Factorial %d = %d\n",atoi(buffer), fact);
+		itoa(fact, buffer);
+		write(cliente, &buffer, sizeof(int));
+		i++;
+	}
+	resultados(datos,i-1);
+	return 1;
+}
+int maximo(int * datos,int n){
+	int m=0,i=0;
+	for(;i<n;i++){
+		if(m<*(datos+i))
+			m = *(datos+i);		
+	}
+	return m;
+}
+int minimo(int * datos,int n){
+	int m=10,i = 0;;
+	for(;i<n;i++)
+		if(m>*(datos+i))
+			m=*(datos+i);
+	return m;
+}
+double promedio(int * datos,int n){
+	double suma=0;
+	int i=0;
+	for(;i<n;i++)
+		suma+=*(datos+i);
+	suma/=n;
+	return suma;
+}
+int resultados(int * datos,int n){
+	printf("Maximo: %d\n",maximo(datos,n));
+	printf("Minimo: %d\n",minimo(datos,n));
+	printf("Promedio: %d\n",promedio(datos,n));
+	return 1;
+}
+
