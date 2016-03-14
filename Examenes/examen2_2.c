@@ -11,14 +11,14 @@
 
 #define temp 3
 #define PATH "datos"
-#define ndir 7
+#define ndir 5
 
 char *buffer[20];
 FILE *file = NULL;
 int grabar = 0;
 
 void control_alarm(int signal){
-  printf("Señal de  alarma\n");
+  printf("Alarma\n");
   grabar = 0;
 }
 
@@ -30,6 +30,10 @@ void imprimir();
 
 int main(int argc, char *argv[]){
   int i = 0;
+  sigset_t mask, pending;
+  sigfillset(&mask);
+  sigdelset(&mask, SIGALRM);
+  sigprocmask(SIG_SETMASK, &mask, NULL);
   signal(SIGALRM, SIG_DFL);
   alarm(2);
   signal(SIGALRM, control_alarm);
@@ -44,6 +48,10 @@ int main(int argc, char *argv[]){
     alarm(temp);
     while(grabar)
       fputc('x', file);
+    sigpending(&pending);
+    for(signal = 1; signal < NSIG; signal++)
+        if(sigismember(&pending, signal))
+            fprintf(file, "\nWas blocked: the signal %d\n", signal);
     fclose(file);
   }
   imprimir();
