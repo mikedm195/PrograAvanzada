@@ -24,7 +24,11 @@ int iniEmp,finEmp,iniGen,finGen;
 void * operaG(void*p){
     cajero * c;
     c = (cajero*)p;
-    int id = (int)p;
+    int gen_emp = ((cajero*)p)->gen_emp;
+    int id = ((cajero*)p)->id;
+    int num = ((cajero*)p)->num;
+    printf("%d\t%d\t%d\n",num,id,gen_emp);
+    //int id = (int)p;
     int t = ((rand() % 6)+9);
 
     if(c->gen_emp == 0)
@@ -51,7 +55,7 @@ void * operaG(void*p){
 void * operaE(void*p){
     cajero * c;
     c = (cajero*)p;
-    int id = (int)p;
+    //int id = (int)p;
     int t = ((rand() % 6)+9);
 
     printf("cliente empresarial %d\tcajero empresarial %d\t%d segundos\n", c->id, c->num, t);
@@ -73,27 +77,29 @@ void atGen(void * p){
     pthread_t* aux;
     int llega;
     int lock = -1;
-    cajero c[8];
+    cajero c[10];
     for(aux = generalesT;aux<(generalesT+G);aux++){  
         lock = -1;
         llega = (rand()%8)+2;
         sleep(llega);
         printf("Llego cliente general %d\n",finGen++);
         while(lock){
-            int i=0;
+            int i=0;/*
             for(;i<3;i++){
-                if(iniEmp == finEmp){
+                if(iniEmp == finEmp){//Saber si hay clientes en la fila empresarial
                     if(pthread_mutex_trylock((Emp+i))==0){
-                        c[i+5].gen_emp = 1;
-                        c[i+5].num = i;
-                        c[i+5].id = iniGen++;
+                        int t = i+5;
+                        c[t].gen_emp = 1;
+                        c[t].num = i;
+                        c[t].id = iniGen++;
+                        printf("%d\t%d\t\n",i,iniGen-1);
                         pthread_create(aux,NULL,operaG, &c[i]);
                         lock = 0;
                         break;
                     }
                 }
             }
-            i=0;
+            i=0;*/
             if(lock !=0){
                 for(;i<5;i++){
                     if(pthread_mutex_trylock((Gen+i))==0){
