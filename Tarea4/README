@@ -1,0 +1,109 @@
+Ejercicio 1
+
+Dado el siguiente problema:
+
+Blancanieves y los siete enanitos viven en una casa donde solo existen cuatro sillas, que los enanitos utilizan para comer. Cuando un enanito vuelve de trabajar en la mina comprueba si hay una silla libre para sentarse. Si existe una silla libre, entonces indica a Blancanieves que ya está sentado, y espera pacientemente su turno a que le sirvan. Cuando le ha servido, Blancanieves le indica que puede empezar a comer. El enanito come y cuando acaba, deja la silla libre y vuelve a la mina. Por su parte, Blancanieves cuando no tiene ningún enanito pendiente de servirle, se va a dar una vuelta.
+
+ 
+
+ a) Realice un análisis exhaustivo de los problemas de concurrencia que se pueden dar en un sistema de este tipo, planteando cada uno de ellos y explicándolo.
+
+ b) Seleccione una técnica de concurrencia para solucionar el problema, explicando los motivos de su selección.
+
+ c) Partiendo del análisis realizado y la técnica de concurrencia seleccionada, programe una solución que resuelva el problema descrito. Utilizar únicamente dos tipos de procesos: Enanito y Blancanieves.
+
+  
+
+Ejercicio 2
+
+  Suponga que una universidad quiere presumir de lo políticamente correcta que es, aplicando la doctrina de la Suprema Corte de EU “separados pero iguales implica desigualdad” no sólo en cuestiones de raza sino también de género, terminando su añeja práctica de tener sanitarios segregados por género en el campus. No obstante, como concesión a la tradición, se decreta que cuando una mujer está en un sanitario, pueden entrar otras mujeres, pero ningún hombre, y viceversa. Un letrero deslizante en la puerta de cada sanitario indica en cuál de los tres posibles estados se encuentra:
+
+   
+
+   o Vacío
+
+   o Hay mujeres
+
+   o Hay hombres
+
+    
+
+    Utilizando como lenguaje de programación C, escriba los siguientes procedimientos: mujer_quiere_entrar, hombre_quiere_entrar, mujer_sale y hombre_sale. Puede usar los contadores y las técnicas de sincronización que desee.
+
+    Demuestre el funcionamiento de la aplicación, mostrando en cada momento un mensaje con el estado del sanitario, quién quiere entrar, cuántos hombre y mujeres hay en espera, cuando entra un hombre, cuando entra una mujer, cuando sale un hombre y cuando sale una mujer. Por ejemplo, la salida debe ser algo como lo siguiente:
+
+     
+
+     ⇒ Sanitario vacío
+
+     ⇒ Llega una mujer (1 en espera)
+
+     ⇒ Entra una mujer (0 en espera)
+
+     ⇒ Sanitario ocupado por mujeres
+
+     ⇒ Llega un hombre (1 en espera)
+
+     ⇒ Llega un hombre (2 en espera)
+
+     ⇒ Llega una mujer (1 en espera)
+
+     ⇒ Entra una mujer (0 en espera)
+
+     ⇒ Sale una mujer
+
+     ⇒ Sale una mujer
+
+     ⇒ Sanitario vacío
+
+     ⇒ Entra un hombre (1 en espera)
+
+     ⇒ Sanitario ocupado por hombres
+
+     ⇒ Entra un hombre (0 en espera)
+
+     ⇒ Sale un hombre
+
+     ⇒ Llega una mujer (1 en espera)
+
+     ⇒ Sale un hombre
+
+     ⇒ Sanitario vacío
+
+     ⇒ Entra una mujer (0 en espera)
+
+     ⇒ Sanitario ocupado por mujeres
+
+     ⇒ Sale una mujer
+
+        ⇒ Sanitario vacío
+
+         
+
+Ejercicio 3
+
+         En el Distrito Federal está a punto de inaugurarse el primer centro comercial en el que la compra la realizan robots en lugar de personas. El centro comercial está compuesto por N (un número fijo) secciones adyacentes, donde por problemas estructurales, cada sección solo puede soportar un peso máximo (Pi). Los compradores envían sus listas de compra a un sistema, y cada lista se asigna a un robot diferente. Cuando un robot recibe su asignación, inicia el recorrido entrando en la sección 0, avanzan a la sección adyacente (0, 1, . . .) cuando han acumulado los productos requeridos de esa sección y terminan saliendo de la sección N − 1.
+
+         Debido al peso de los robots y las limitantes estructurales de centro comercial, cuando un robot con un determinado peso (pi) quiere avanzar a la siguiente sección, debe esperar hasta que el incremento de peso que provoca no ponga en peligro la estructura (si el peso actual acumulado de los robots que se encuentran en la sección adyacente es peso entonces un robot con peso pi no puede avanzar si peso + pi > Pi).
+
+         Tenga en cuenta que debido a la demanda existente en el centro comercial y la poca disponibilidad de robots con que se cuenta inicialmente, se desea que si un robot  se encuentra esperando para entrar en una sección (debido a restricción de sobrepeso), en cuanto se libere peso en dicha sección se le notifique al robot en espera para que intente avanzar.
+
+         Escriba un programa en C que resuelva el problema anterior.
+
+          
+
+Ejercicio 4
+
+          Un sistema distribuido de supervisión y registro de datos se compone de varias unidades de adquisición de datos (UADs) y una unidad central de registro, como se indica en la siguiente figura:
+
+          Captura de pantalla 2016-02-25 a las 8.54.11 a.m..png
+
+          En cada unidad de adquisición de datos se realiza continuamente un bucle de exploración de un sensor y se anota el valor actual de esa medida. Cuando se detecten ciertos cambios críticos se enviará un registro de alarma a la unidad de registro.
+
+          Las unidades de adquisición de datos atenderán también a órdenes periódicas de muestreo desde la unidad de registro, a las que responderán con los valores actuales anotados de las medidas.
+
+          Se asume que las unidades de adquisición de datos pueden tomar las medidas a una cadencia mucho más rápida que las solicitudes de muestreo, es decir, pueden repetir varias veces la lectura de los sensores entre dos órdenes de muestreo sucesivas.
+
+          La unidad de registro recibirá las alarmas enviadas espontáneamente por las unidades de adquisición de datos, y las almacenará en disco. Periódicamente enviará órdenes de muestreo a esas mismas unidades de adquisición y almacenará en disco las colecciones de medidas recibidas. Solo se dispone de un disco, por lo que las operaciones de registro en él solo se podrán hacer de una en una, sean alarmas o medidas originadas por los muestreos. El registro de las alarmas debe tener prioridad sobre el de las medidas. Si el registro de medidas se retrasa, se puede suprimir el registro de las más antiguas. Por ejemplo, la nueva lectura de un sensor reemplaza a la antigua, si no había sido grabada todavía (ej. solo se guarda una medida por unidad de adquisición).
+
+          Programe una aplicación en C que modele y resuelta el problema anterior.
