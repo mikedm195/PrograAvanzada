@@ -1,0 +1,20 @@
+Ejercicio 3.
+	Escriba un programa en C que pida la cantidad de procesos hijos a crear, el proceso
+	principal creará inicialmente todos los hijos, cada hijo esperará un tiempo aleatorio y
+	luego el padre esperará a que cada hijo termine y según estos van terminando, el padre
+	imprimirá el PID del hijo.
+Ejercicio 4.
+	Escriba un programa en C que reciba como argumentos de la línea de comandos la
+	cantidad de niveles de procesos hijos a crear (-n) y el número de procesos por niveles (-
+	p) , el proceso principal creará inicialmente los procesos del primer nivel y cada uno de
+	estos crearán los procesos del segundo nivel y así sucesivamente hasta que se creen
+	todos los procesos de todos los niveles. En cada nivel, excepto el último, cada proceso
+	debe esperar a que se terminen sus hijos.
+	Como salida del programa debe mostrar una jerarquía arbórea que represente la
+	jerarquía de procesos (similar a la salida del comando pstree )
+Ejercicio 5.
+	Escriba un programa en C que reciba como parámetros el programa a arrancar (-p) y el
+	número de veces (-n):
+	Ej.- $lanzador -n 4 -p programa
+	1 /! 2Lanzará simultáneamente n procesos con el programa indicado y esperará por la
+	terminación de todos sus hijos.
