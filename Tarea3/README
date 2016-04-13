@@ -1,0 +1,47 @@
+
+
+Ejercicio 1. 
+
+Programe una aplicación en C que permita crear un hijo, el cual quedará durmiendo durante 10 segundos y al despertar mandará la señal SIGUSR1 a su padre. El padre, al recibir esta señal, mostrará el mensaje:
+
+“Se ha pulsado X veces CTRL+C y se ha pulsado Y veces CTRL+Z. Acabando...”
+
+y a continuación mandará la señal de terminación a todos los procesos de su grupo, incluido el mismo.
+
+Mientras el hijo duerme, el padre mostrará un mensaje cada x segundos. Inicialmente x vale 3. El mensaje será de la forma: “Aparezco cada x segundos” Para controlar los intervalos de tiempo que determinan la frecuencia de aparición de este último mensaje hay que establecer un temporizador que genere al expirar una señal de alarma.
+
+    Si se pulsa CTRL+C , se incrementará en 1 el valor de x (el número de segundos al que se inicia el temporizador).
+    Si se pulsa CTRL+Z se disminuye en 1 el valor de x , siempre que éste sea mayor que 1. Usar una sola función manejadora (handler) para controlar las señales provocadas por  CTRL + C y  CTRL + Z.
+
+ 
+
+Ejercicio 2. 
+
+Escribir un programa en C que cumpla los siguientes requisitos:
+
+    Mediante una función se debe comprobar si en el directorio actual existe un subdirectorio llamado “datos”. Si éste no existe, se deberá crear; en caso contrario, se borrarán todos los posibles ficheros que contenga.
+    El programa principal se encargará de instalar un gestor para la señal SIGALRM. 
+    A continuación, mediante un ciclo realizará 5 iteraciones, en cada una de las cuales:
+        generará un nombre de fichero distinto (el primero de ellos “a0” , el siguiente “a1” y, así sucesivamente, terminando por “a4”),
+        abrirá (para crear) dicho fichero dentro del subdirectorio “datos” (es obligatorio utilizar descriptores de archivos),
+        establecerá un temporizador a 3 segundos, 
+        y, finalmente, comenzará a escribir en el fichero recién creado el carácter “x” mientras una variable global (de nombre “grabar”) valga 1. 
+    Cuando el temporizador expire, se debe establecer la variable “grabar” a 0 y, luego, cerrar el fichero. 
+    En resumen, se trata de generar distintos ficheros, y en cada uno de ellos se estará grabando un carácter entre dos señales SIGALRM. 
+    Por último, listar en pantalla los nombres de los ficheros creados y su tamaño. No usar la función system. 
+    El número total de ficheros a crear, así como el número de segundos que establece el temporizador, se definirán como macros.
+
+ 
+
+Ejercicio 3. 
+
+Programe una aplicación en C que permita leer una serie de números enteros y almacenarlos en un array, para luego presentarlos todos en pantalla. El programa ignorará la pulsación CTRL + C.
+
+    La cantidad de números a leer se dará como un parámetro en la línea de comandos y han de ser más de 4 y menos de 10.
+    Si no se da un parámetro en la línea de comandos, o bien, si el valor numérico de la cadena dada no está entre 5 y 9, ambos inclusive, se dará el correspondiente mensaje de error y finalizará el programa.
+    Para indicarle al usuario que introduzca un dato, debe aparecer en pantalla: 
+        Dato X: _
+    Hay que tener en cuenta que este mensaje aparecerá si no han transcurrido 3 segundos desde que se dio el primer mensaje.
+    Si han transcurridos 3 segundos desde que se le pidió el primer dato, los próximos mensajes de petición de entrada de datos serán de la forma:
+        Dese prisa. Dato X:
+
