@@ -41,6 +41,5 @@ int main()
     }
 
     printf("SUM :: %d\n", sum);
-
     return 0;
 }
